@@ -5,6 +5,10 @@ var express    = require('express'),
     db         = {},
     responder  = require('./httpResponder');
 
+// Port and Root
+var port = process.argv[2] || 1337,
+    root = 'http://localhost:' + port;
+
 // Connect to an NeDB database
 db.crips = new Datastore({
   filename: 'db/crips',
@@ -31,7 +35,21 @@ app.get('/crips', function( req, res ) {
 });
 
 app.post('/crips', function( req, res ) {
-  db.crips.insert({ name: req.body.name }, res.locals.respond);
+  if ( !req.body.name ) {
+    res.json(400, {
+      error: "A name is required to create a new crip."
+    });
+    return;
+  }
+  db.crips.insert({ name: req.body.name }, function( err, created) {
+    if ( err ) {
+      res.json(500, err);
+      return;
+    }
+
+    res.set('Location', root + '/crips/' + created._id);
+    res.json(201, created);
+  });
 });
 
 app.get('/crips/:id', function( req, res ) {
@@ -48,45 +66,4 @@ app.delete('/crips/:id', function( req, res ) {
   db.crips.remove({ _id: req.params.id }, res.locals.respond);
 });
 
-app.post('/crips/:id', function( req, res ) {
-
-  switch ( req.body.action ) {
-    case "view":
-      db.crips.find({
-        _id: req.params.id
-      }, respond);
-      break;
-
-    case "position":
-      db.crips.update({ _id: req.params.id },
-        { $set: { position: req.body.position }
-      }, function( err, num) {
-        res.locals.respond(err, { success: num + " records updated" });
-      });
-      break;
-  }
-})
-.post('/rpc', function( req, res) {
-
-  switch ( req.body.action ) {
-    case "getCrips":
-      db.crips.find({}, res.locals.respond);
-      break;
-
-    case "addCrip":
-      db.crips.insert({ name: req.body.name }, res.locals.respond);
-      break;
-
-    case "positionCrip":
-      db.crips.update({ name: req.body.name },
-        { $set: { position: req.body.position }
-      }, function( err, num) {
-        res.locals.respond(err, { success: num + " records updated" });
-      });
-      break;
-
-    default:
-      res.locals.respond("No action given");
-  }
-})
-.listen(1337);
+app.listen(port);
