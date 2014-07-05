@@ -2,18 +2,8 @@ var express    = require('express'),
     bodyParser = require('body-parser'),
     app        = express(),
     Datastore  = require('nedb'),
-    db         = {};
-
-var setupResponder = function( res ) {
-  return function( err, response ) {
-    if ( err ) {
-      res.send( JSON.stringify(err) );
-    }
-    else {
-      res.send( JSON.stringify(response) );
-    }
-  };
-};
+    db         = {},
+    responder  = require('./httpResponder');
 
 // Connect to an NeDB database
 db.crips = new Datastore({
@@ -24,36 +14,43 @@ db.crips = new Datastore({
 // Necessary for accessing POST data via req.body object
 app.use(bodyParser.json());
 
+// Catch-all route to set global values
+app.use(function( req, res, next ) {
+  res.type('application/json');
+  res.locals.respond = responder.setup( res );
+  next();
+});
+
 // Routes
 app.get('/', function( req, res ) {
   res.send("The API is working.");
-})
-.post('/crips', function( req, res ) {
-  var body    = req.body,
-      respond = setupResponder(res);
+});
 
-  res.set('Content-Type', 'application/json');
+app.get('/crips', function( req, res ) {
+  db.crips.find({}, res.locals.respond);
+});
 
-  switch ( body.action ) {
-    case "viewList":
-      db.crips.find({}, respond);
-      break;
+app.post('/crips', function( req, res ) {
+  db.crips.insert({ name: req.body.name }, res.locals.respond);
+});
 
-    case "addNew":
-      db.crips.insert({ name: body.name }, respond);
-      break;
+app.get('/crips/:id', function( req, res ) {
+  db.crips.findOne({ _id: req.params.id }, res.locals.respond);
+});
 
-    default:
-      respond({ error: "No action given in request." });
-  }
-})
-.post('/crips/:id', function( req, res ) {
-  var body    = req.body,
-      respond = setupResponder(res);
+app.put('/crips/:id', function( req, res ) {
+  db.crips.update({ _id: req.params.id }, req.body, function( err, num ) {
+    res.locals.respond(err, { success: num + " records updated" });
+  });
+});
 
-  res.set('Content-Type', 'application/json');
+app.delete('/crips/:id', function( req, res ) {
+  db.crips.remove({ _id: req.params.id }, res.locals.respond);
+});
 
-  switch ( body.action ) {
+app.post('/crips/:id', function( req, res ) {
+
+  switch ( req.body.action ) {
     case "view":
       db.crips.find({
         _id: req.params.id
@@ -62,38 +59,34 @@ app.get('/', function( req, res ) {
 
     case "position":
       db.crips.update({ _id: req.params.id },
-        { $set: { position: body.position }
+        { $set: { position: req.body.position }
       }, function( err, num) {
-        respond(err, { success: num + " records updated" });
+        res.locals.respond(err, { success: num + " records updated" });
       });
       break;
   }
 })
 .post('/rpc', function( req, res) {
-  var body    = req.body,
-      respond = setupResponder(res);
 
-  res.set('Content-Type', 'application/json');
-
-  switch ( body.action ) {
+  switch ( req.body.action ) {
     case "getCrips":
-      db.crips.find({}, respond);
+      db.crips.find({}, res.locals.respond);
       break;
 
     case "addCrip":
-      db.crips.insert({ name: body.name }, respond);
+      db.crips.insert({ name: req.body.name }, res.locals.respond);
       break;
 
     case "positionCrip":
-      db.crips.update({ name: body.name },
-        { $set: { position: body.position }
+      db.crips.update({ name: req.body.name },
+        { $set: { position: req.body.position }
       }, function( err, num) {
-        respond(err, { success: num + " records updated" });
+        res.locals.respond(err, { success: num + " records updated" });
       });
       break;
 
     default:
-      respond("No action given");
+      res.locals.respond("No action given");
   }
 })
 .listen(1337);
