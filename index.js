@@ -4,6 +4,17 @@ var express    = require('express'),
     Datastore  = require('nedb'),
     db         = {};
 
+var setupResponder = function( res ) {
+  return function( err, response ) {
+    if ( err ) {
+      res.send( JSON.stringify(err) );
+    }
+    else {
+      res.send( JSON.stringify(response) );
+    }
+  };
+};
+
 // Connect to an NeDB database
 db.crips = new Datastore({
   filename: 'db/crips',
@@ -17,16 +28,50 @@ app.use(bodyParser.json());
 app.get('/', function( req, res ) {
   res.send("The API is working.");
 })
+.post('/crips', function( req, res ) {
+  var body    = req.body,
+      respond = setupResponder(res);
+
+  res.set('Content-Type', 'application/json');
+
+  switch ( body.action ) {
+    case "viewList":
+      db.crips.find({}, respond);
+      break;
+
+    case "addNew":
+      db.crips.insert({ name: body.name }, respond);
+      break;
+
+    default:
+      respond({ error: "No action given in request." });
+  }
+})
+.post('/crips/:id', function( req, res ) {
+  var body    = req.body,
+      respond = setupResponder(res);
+
+  res.set('Content-Type', 'application/json');
+
+  switch ( body.action ) {
+    case "view":
+      db.crips.find({
+        _id: req.params.id
+      }, respond);
+      break;
+
+    case "position":
+      db.crips.update({ _id: req.params.id },
+        { $set: { position: body.position }
+      }, function( err, num) {
+        respond(err, { success: num + " records updated" });
+      });
+      break;
+  }
+})
 .post('/rpc', function( req, res) {
   var body    = req.body,
-      respond = function( err, results ) {
-        if ( err ) {
-          res.send( JSON.stringify(err) );
-        }
-        else {
-          res.send( JSON.stringify(results) );
-        }
-      };
+      respond = setupResponder(res);
 
   res.set('Content-Type', 'application/json');
 
