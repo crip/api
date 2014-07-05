@@ -4,13 +4,16 @@ var express    = require('express'),
     Datastore  = require('nedb'),
     db         = {};
 
+// Connect to an NeDB database
 db.crips = new Datastore({
   filename: 'db/crips',
   autoload: true
 });
 
+// Necessary for accessing POST data via req.body object
 app.use(bodyParser.json());
 
+// Routes
 app.get('/', function( req, res ) {
   res.send("The API is working.");
 })
