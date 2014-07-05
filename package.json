@@ -1,0 +1,24 @@
+{
+  "name": "cripapi",
+  "version": "0.0.1",
+  "description": "The official Crip API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crip/api.git"
+  },
+  "author": "Johnie Hjelm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/crip/api/issues"
+  },
+  "homepage": "https://github.com/crip/api",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.5.0",
+    "nedb": "^0.10.6"
+  }
+}
