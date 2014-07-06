@@ -3,7 +3,7 @@ var express    = require('express'),
     app        = express(),
     Datastore  = require('nedb'),
     db         = {},
-    responder  = require('./httpResponder');
+    wrapper    = require('./lib/wrapper.js');
 
 // Port and Root
 var port = process.argv[2] || 1337,
@@ -27,7 +27,9 @@ app.use(bodyParser.json());
 // Catch-all route to set global values
 app.use(function( req, res, next ) {
   res.type('application/json');
-  res.locals.respond = responder.setup( res );
+  res.locals.wrap = wrapper.create({
+    start: new Date()
+  });
   next();
 });
 
@@ -37,7 +39,25 @@ app.get('/', function( req, res ) {
 });
 
 app.get('/crips', function( req, res ) {
-  db.crips.find({}, res.locals.respond);
+  db.crips.find({}, function( err, results ) {
+    if ( err ) {
+      res.json(500, { error: err });
+      return;
+    }
+
+    // res.json(200, res.locals.wrap(results.map(function( crip ) {
+    //   crip.links = {
+    //     self: root + '/crips/' + crip._id
+    //   };
+    //   return crip;
+    // }), {
+    //   next: root + '/crips?page=2'
+    // }));
+
+    res.json(200, res.locals.wrap({}, { item: results.map(function ( crip ) {
+      return root + '/crips/' + crip._id;
+    })}));
+  });
 });
 
 app.post('/crips', function( req, res ) {
@@ -70,7 +90,9 @@ app.get('/crips/:id', function( req, res ) {
       return;
     }
 
-    res.json(200, result);
+    res.json(200, res.locals.wrap(result, {
+      self: root + '/crips/' + req.params.id
+    }));
   });
 });
 
