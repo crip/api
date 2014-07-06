@@ -1,9 +1,16 @@
 var express    = require('express'),
+    nunjucks   = require('nunjucks'),
     bodyParser = require('body-parser'),
     app        = express(),
     Datastore  = require('nedb'),
     db         = {},
     wrapper    = require('./lib/wrapper.js');
+
+// Configure Nunjucks
+nunjucks.configure('views', {
+  autoescape: true,
+  express   : app
+});
 
 // Port and Root
 var port = process.argv[2] || 1337,
@@ -17,8 +24,8 @@ db.crips = new Datastore({
 
 // Add an index
 db.crips.ensureIndex({
-  fieldName: 'name',
-  unique: true
+  unique: true,
+  fieldName: 'name'
 });
 
 // Necessary for accessing POST data via req.body object
@@ -35,7 +42,12 @@ app.use(function( req, res, next ) {
 
 // Routes
 app.get('/', function( req, res ) {
-  res.send("The API is working.");
+  res.type('text/html');
+  res.render('index.html', {
+    title: "Crip as a Service",
+    name: "Crip API",
+    desc: "api.crip.io"
+  });
 });
 
 app.get('/crips', function( req, res ) {

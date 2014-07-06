@@ -20,6 +20,7 @@
     "body-parser": "^1.4.3",
     "express": "^4.5.0",
     "nedb": "^0.10.6",
+    "nunjucks": "^1.0.5",
     "underscore": "^1.6.0"
   }
 }
