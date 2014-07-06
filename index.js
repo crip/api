@@ -15,6 +15,12 @@ db.crips = new Datastore({
   autoload: true
 });
 
+// Add an index
+db.crips.ensureIndex({
+  fieldName: 'name',
+  unique: true
+});
+
 // Necessary for accessing POST data via req.body object
 app.use(bodyParser.json());
 
@@ -37,13 +43,13 @@ app.get('/crips', function( req, res ) {
 app.post('/crips', function( req, res ) {
   if ( !req.body.name ) {
     res.json(400, {
-      error: "A name is required to create a new crip."
+      error: { message: "A name is required to create a new crip." }
     });
     return;
   }
   db.crips.insert({ name: req.body.name }, function( err, created) {
     if ( err ) {
-      res.json(500, err);
+      res.json(500, { error: err });
       return;
     }
 
@@ -53,7 +59,19 @@ app.post('/crips', function( req, res ) {
 });
 
 app.get('/crips/:id', function( req, res ) {
-  db.crips.findOne({ _id: req.params.id }, res.locals.respond);
+  db.crips.findOne({ _id: req.params.id }, function( err, result) {
+    if ( err ) {
+      res.json(500, { error: err });
+      return;
+    }
+
+    if ( !result ) {
+      res.json(404, { error: { message: "We did not find a crip with id: " + req.params.id }});
+      return;
+    }
+
+    res.json(200, result);
+  });
 });
 
 app.put('/crips/:id', function( req, res ) {
@@ -63,7 +81,20 @@ app.put('/crips/:id', function( req, res ) {
 });
 
 app.delete('/crips/:id', function( req, res ) {
-  db.crips.remove({ _id: req.params.id }, res.locals.respond);
+  db.crips.remove({ _id: req.params.id }, function( err, num) {
+    if ( err ) {
+      res.json(500, { error: err });
+      return;
+    }
+
+    if ( num === 0 ) {
+      res.json(404, { error: { message: "We did not find a crip with id: " + req.params.id }});
+      return;
+    }
+
+    res.set('Link', root + '/crips; rel="collection"');
+    res.send(204);
+  });
 });
 
 app.listen(port);
