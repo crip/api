@@ -1,3 +1,406 @@
+/**
+ * Crip API
+ * Designer & Developer: Johnie Hjelm
+ * › Twitter: @johniehjelm
+ * › GitHub: @johnie
+ */
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 body {
-  background-color: #00f;
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a {
+  background: transparent;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: 600;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0;
+  padding: 0;
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: "omnes-pro", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, arial, sans-serif;
+  color: #1d2327;
+  line-height: 1.68;
+  padding: 0;
+  margin: 0;
+}
+a {
+  color: #534267;
+}
+p {
+  font-size: 1.2em;
+}
+.header {
+  background: #534267 url("images/api_bg.png") bottom center repeat-x;
+  min-height: 450px;
+  padding: 40px 20px;
+  color: #fff;
+  position: relative;
+}
+.header__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  zoom: 1;
+}
+.header__inner:after,
+.header__inner:before {
+  content: "";
+  display: table;
+}
+.header__inner:after {
+  clear: both;
+}
+.header__jumbotron {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding-top: 40px;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.site-title {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+.logo {
+  display: block;
+  background: transparent url("images/logo.svg") top center no-repeat;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -ms-background-size: 100%;
+  background-size: 100%;
+  width: 35px;
+  height: 45px;
+  text-indent: -9999px;
+  float: left;
+}
+.nav {
+  float: right;
+}
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.nav li {
+  display: inline-block;
+}
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 44px;
+  font-size: 14px;
+  padding: 0.5em 1.5em;
+  letter-spacing: 1px;
+}
+.nav a:hover {
+  text-decoration: underline;
+}
+.nav .login-link {
+  border: 2px solid #1d2327;
+  -webkit-border-radius: 10em;
+  -moz-border-radius: 10em;
+  -ms-border-radius: 10em;
+  border-radius: 10em;
+  -webkit-transition: background-color 0.2s ease;
+  -moz-transition: background-color 0.2s ease;
+  -ms-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+.nav .login-link:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #1d2327;
+}
+.site-name {
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+  font-size: 9em;
+  line-height: 1;
+  letter-spacing: 10px;
+}
+.site-description {
+  font-size: 1.2em;
+  line-height: 1;
+}
+.signup-wrap {
+  background-color: #ebe5f4;
+  padding: 40px 20px;
+  text-align: center;
+  zoom: 1;
+  margin-bottom: 50px;
+}
+.signup-wrap:after,
+.signup-wrap:before {
+  content: "";
+  display: table;
+}
+.signup-wrap:after {
+  clear: both;
+}
+.signup-wrap__inner {
+  display: inline-block;
+}
+.signup-email {
+  height: 41px;
+  margin: 0;
+  margin-right: 1em;
+  width: 300px;
+  padding: 0px 1em;
+  border: 1px solid #b8a3d8;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.signup-email:focus {
+  outline: none;
+  border: 1px solid #8560bc;
+  -webkit-box-shadow: 0 0 5px #534267;
+  -moz-box-shadow: 0 0 5px #534267;
+  -ms-box-shadow: 0 0 5px #534267;
+  box-shadow: 0 0 5px #534267;
+}
+.signup-email::-webkit-input-placeholder,
+.signup-email:-moz-placeholder,
+.signup-email::-moz-placeholder,
+.signup-email:-ms-input-placeholder {
+  color: #534267;
+}
+.main {
+  padding-bottom: 30px;
+}
+.article {
+  display: block;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.footer {
+  background: #534267 url("images/footer.png") center center no-repeat;
+  height: 250px;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  background-size: cover;
+}
+.btn {
+  display: inline-block;
+  padding: 0 1.5em;
+  line-height: 2.3;
+  text-align: center;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  position: relative;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+}
+.btn__small {
+  font-size: 10px;
+}
+.btn__medium {
+  font-size: 18px;
+}
+.btn__large {
+  font-size: 24px;
+}
+.btn--primary {
+  background-color: #534267;
+  color: #fff;
+}
+.btn--secondary {
+  background-color: #1d2327;
+  color: #fff;
 }

@@ -11,7 +11,7 @@ var gulp        = require('gulp'),
 
 // Public Directory to watch for changes
 var publicDir = {
-  stylus: "./public/style/**/*.{styl,css}",
+  stylus: "./public/style/**/*",
   js: "./public/js/*.js",
   coffee: "./public/js/coffee/*.coffee"
 };
@@ -20,7 +20,7 @@ var publicDir = {
 var viewsDir = "./views/**/*.html";
 
 gulp.task('stylus', function() {
-  gulp.src(publicDir.stylus)
+  gulp.src("./public/style/*.styl")
     .pipe(plumber())
     .pipe(stylus({
       set:['compress']
@@ -60,7 +60,7 @@ gulp.task('watch', function() {
 gulp.task('demon', function () {
   nodemon({
     script: 'index.js',
-    ext: 'js html css',
+    ext: 'js',
     env: {
       'NODE_ENV': 'development'
     }

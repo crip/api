@@ -49,7 +49,7 @@ app.get('/', function( req, res ) {
   res.type('text/html');
   res.render('index.html', {
     title: "Crip as a Service",
-    name: "API",
+    name: "Crip API",
     desc: "api.crip.io",
     url: root
   });

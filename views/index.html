@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "layout.html" %}
 
-  <link rel="stylesheet" href="{{ url }}/style.css">
+{% block content %}
 
-  <title>{{ title }} - {{ name }}</title>
-  <meta charset="UTF-8">
-</head>
-<body>
+  <aside class="signup-wrap">
+    <div class="signup-wrap__inner">
+      <input type="email" class="signup-email" placeholder="Your email, crip?">
+      <a href="#" class="btn btn__medium btn--primary">Sign up</a>
+    </div>
+  </aside>
 
-</body>
-</html>
+  <article class="article">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem pariatur ratione voluptates, architecto autem, nesciunt distinctio ab, delectus id quisquam rerum in deleniti molestiae fugiat odio molestias doloribus facere sed.</p>
+  </article>
+
+{% endblock %}

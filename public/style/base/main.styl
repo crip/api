@@ -1,0 +1,140 @@
+/*------------------------------------*
+   $MAIN
+*------------------------------------*/
+
+body
+  font-family $base-font-family
+  color $base-ui-color
+  line-height 1.68
+  padding 0
+  margin 0
+
+a
+  color $brand-color
+
+p
+  font-size 1.2em
+
+.header
+  background $brand-color url('images/api_bg.png') bottom center repeat-x
+  min-height 450px
+  padding 40px 20px
+  color #fff
+  position relative
+
+  &__inner
+    max-width 1100px
+    margin 0 auto
+    clearfix()
+
+  &__jumbotron
+    position absolute
+    width 100%
+    text-align center
+    padding-top 40px
+    top 50%
+    left 0
+    vendor('transform', translateY(-50%))
+
+.site-title
+  float left
+  margin 0
+  padding 0
+
+.logo
+  display block
+  background transparent url('images/logo.svg') top center no-repeat
+  vendor('background-size', 100%)
+  width 35px
+  height 45px
+  text-indent -9999px
+  float left
+
+.nav
+  float right
+
+  ul
+    padding 0
+    margin 0
+    list-style none
+
+  li
+    display inline-block
+
+  a
+    color #fff
+    text-decoration none
+    text-transform uppercase
+    font-weight 500
+    line-height 44px
+    font-size 14px
+    padding .5em 1.5em
+    letter-spacing 1px
+
+    &:hover
+      text-decoration underline
+
+  .login-link
+    border 2px solid $base-ui-color
+    vendor('border-radius', 10em)
+    vendor('transition', background-color .2s ease)
+
+    &:hover
+      text-decoration none
+      color #fff
+      background-color $base-ui-color
+
+.site-name
+  text-transform uppercase
+  padding 0
+  margin 0
+  font-weight 300
+  font-size 9em
+  line-height 1
+  letter-spacing 10px
+
+.site-description
+  font-size 1.2em
+  line-height 1
+
+.signup-wrap
+  background-color $light-ui-color
+  padding 40px 20px
+  text-align center
+  clearfix()
+  margin-bottom 50px
+
+  &__inner
+    display inline-block
+
+.signup-email
+  height 41px
+  margin 0
+  margin-right 1em
+  width 300px
+  padding 0px 1em
+  border 1px solid darken($light-ui-color, 20%)
+  vendor('border-radius', 4px)
+  vendor('transition', all .2s ease)
+
+  &:focus
+    outline none
+    border 1px solid darken($light-ui-color, 40%)
+    vendor('box-shadow', 0 0 5px $brand-color)
+
+  &::-webkit-input-placeholder, &:-moz-placeholder, &::-moz-placeholder, &:-ms-input-placeholder
+    color $brand-color
+
+.main
+  padding-bottom 30px
+
+.article
+  display block
+  max-width 1100px
+  margin 0 auto
+
+.footer
+  background $brand-color url('images/footer.png') center center no-repeat
+  height 250px
+  width 100%
+  vendor('background-size', cover)
