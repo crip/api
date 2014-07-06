@@ -2,6 +2,7 @@ var express    = require('express'),
     nunjucks   = require('nunjucks'),
     bodyParser = require('body-parser'),
     app        = express(),
+    path       = require('path'),
     Datastore  = require('nedb'),
     db         = {},
     wrapper    = require('./lib/wrapper.js');
@@ -11,6 +12,9 @@ nunjucks.configure('views', {
   autoescape: true,
   express   : app
 });
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Port and Root
 var port = process.argv[2] || 1337,
@@ -45,8 +49,9 @@ app.get('/', function( req, res ) {
   res.type('text/html');
   res.render('index.html', {
     title: "Crip as a Service",
-    name: "Crip API",
-    desc: "api.crip.io"
+    name: "API",
+    desc: "api.crip.io",
+    url: root
   });
 });
 
