@@ -45,18 +45,18 @@ app.get('/crips', function( req, res ) {
       return;
     }
 
-    // res.json(200, res.locals.wrap(results.map(function( crip ) {
-    //   crip.links = {
-    //     self: root + '/crips/' + crip._id
-    //   };
-    //   return crip;
-    // }), {
-    //   next: root + '/crips?page=2'
-    // }));
+    res.json(200, res.locals.wrap(results.map(function( crip ) {
+      crip.links = {
+        self: root + '/crips/' + crip._id
+      };
+      return crip;
+    }), {
+      next: root + '/crips?page=2'
+    }));
 
-    res.json(200, res.locals.wrap({}, { item: results.map(function ( crip ) {
-      return root + '/crips/' + crip._id;
-    })}));
+    // res.json(200, res.locals.wrap({}, { item: results.map(function ( crip ) {
+    //   return root + '/crips/' + crip._id;
+    // })}));
   });
 });
 
