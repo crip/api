@@ -40,6 +40,7 @@ p
   float left
   margin 0
   padding 0
+  position relative
 
 .logo
   display block
@@ -136,6 +137,38 @@ p
 
 .footer
   background $brand-color url('images/footer.png') center center no-repeat
-  height 250px
+  padding 30px 20px
   width 100%
   vendor('background-size', cover)
+
+
+.copyright
+  display block
+  color #fff
+
+  &-title
+    font-weight 500
+    font-size 16px
+    margin 0
+    letter-spacing 1px
+
+  &-desc
+    font-weight 300
+    font-size 14px
+    margin 0
+    letter-spacing 1px
+    margin-bottom 10px
+
+  &-break
+    width 5%
+    margin 0
+    margin-bottom 20px
+    clearfix()
+    margin-bottom 20px
+
+  &-link
+    color #fff
+    text-decoration none
+
+  &-spacer
+    margin 0px .5em
