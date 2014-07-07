@@ -325,10 +325,11 @@ p {
   display: inline-block;
 }
 .signup-email {
-  height: 41px;
+  height: 55px;
   margin: 0;
   margin-right: 1em;
-  width: 300px;
+  width: 400px;
+  font-size: 20px;
   padding: 0px 1em;
   border: 1px solid #b8a3d8;
   -webkit-border-radius: 4px;
@@ -386,6 +387,10 @@ p {
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   border-radius: 4px;
+  -webkit-transition: background-color 0.2s ease;
+  -moz-transition: background-color 0.2s ease;
+  -ms-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 .btn__small {
   font-size: 10px;
@@ -400,7 +405,15 @@ p {
   background-color: #534267;
   color: #fff;
 }
+.btn--primary:hover,
+.btn--primary:focus {
+  background-color: #644f7c;
+}
 .btn--secondary {
   background-color: #1d2327;
   color: #fff;
+}
+.btn--secondary:hover,
+.btn--secondary:focus {
+  background-color: #303a40;
 }

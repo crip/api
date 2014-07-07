@@ -14,6 +14,7 @@
   letter-spacing 1px
   position relative
   vendor('border-radius', 4px)
+  vendor('transition', background-color .2s ease)
 
 // Button sizes
 .btn__small
@@ -31,6 +32,12 @@
   background-color $brand-color
   color #fff
 
+  &:hover, &:focus
+    background-color lighten($brand-color, 10%)
+
 .btn--secondary
   background-color $base-ui-color
   color #fff
+
+  &:hover, &:focus
+    background-color lighten($base-ui-color, 10%)

@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 
+  <meta property="og:image" content="http://crip.io/images/fbimage.png"/>
+  <meta property="og:title" content="Crip API"/>
+  <meta property="og:url" content="http://api.crip.io/"/>
+  <meta property="og:site_name" content="Crip API"/>
+  <meta property="og:description" content="The official CPI with awesome crips making the world a little bit better."/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui" />
+  <link rel="icon" type="image/png" href="{{ url }}/images/favicon.png">
+
   <script type="text/javascript" src="//use.typekit.net/jvu6kzp.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -15,7 +24,7 @@
 </head>
 <body>
 
-  <div class="site" ng-app="cpi" ng-controller="CPIController">
+  <div class="site" ng-app="cpi" ng-controller="CripController">
 
     <header class="header" role="banner">
       <div class="header__inner">
@@ -40,7 +49,7 @@
 
     <footer class="footer" role="contentinfo">
       <div class="footer__inner">
-
+        {{ copydate }}
       </div>
     </footer>
 
